@@ -1,0 +1,275 @@
+
+
+body {
+    background: #ff5c00;
+    margin: 50px 15px 30px;
+	
+}
+
+
+h1 {
+    color: #ffffff;
+    width: 75%;
+    text-align: left;
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 300;
+    margin-bottom: 60px;
+    margin-top: 0;
+}
+
+h1 a {
+    text-decoration: none;
+    color: white;
+}
+
+h1 a:hover {
+	color: #ffff00;
+}
+
+.filters ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 7px;
+    margin-top: 0;
+    padding: 0;
+    list-style-type: none;
+    font-family: 'Cousine', monospace;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: .8px;
+
+}
+
+.filters li {
+    margin: 0 4px 7px 0;
+}
+
+.filters a {
+    display: block;
+    padding: 13px 17px;
+    color: #ffff00;
+    text-decoration: none;
+    border: 1px #ffff00 solid;
+    border-radius: 50px;
+}
+
+
+.filters a:hover {
+    background: #ffff00;
+    color: #ff5c00;
+    transition: 0.2s;
+}
+
+a.checked {
+    background: #ffff00;
+    color: #ff5c00;
+}
+
+
+
+.courses {
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 100px;
+
+
+}
+
+.course {
+    box-sizing: border-box;
+    margin-bottom: 30px;
+
+}
+
+.course a {
+    display: block;
+    text-decoration: none;
+    font-family: 'Cousine', monospace;
+    font-weight: 300;
+    font-size: 12px;
+    color: #ffffff;
+}
+
+
+.course img {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+  
+
+footer {
+	color: #ffffff;
+    text-align: left;
+    font-family: 'Rubik', sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 300;
+    width: 65%;
+}
+
+
+
+
+/*    Break Point    */
+
+
+@media screen and (min-width: 480px) {
+	
+body {
+	margin: 70px 30px 30px;
+}	
+
+h1 {
+
+	font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 80px;
+}
+
+.filters ul {
+    margin-bottom: 15px;
+    font-size: 10px;
+    letter-spacing: 1px;
+
+}
+
+.filters li {
+    margin: 0 5px 8px 0;
+}
+
+.filters a {
+    padding: 14px 20px;
+}
+
+.course {
+	margin-bottom: 40px;
+}
+
+footer {
+    font-size: 20px;
+    line-height: 25px;
+    width: 60%;
+
+}
+
+
+/*    Break Point    */
+
+
+@media screen and (min-width: 768px) {
+    
+body {
+	margin: 80px 20px 20px;
+}	
+
+h1 {
+
+	font-size: 23px;
+    line-height: 28px;
+    margin-bottom: 90px;
+    width: 55%;
+    margin-left: 2%;
+	margin-right: 2%
+}
+
+.filters ul {
+    font-size: 10px;
+    letter-spacing: 1.1px;
+    margin-left: 2%;
+	margin-right: 2%
+
+}
+
+.filters li {
+    margin: 0 8px 0px 0;
+}
+
+.filters a {
+    padding: 17px 20px;
+}
+
+
+
+.course {
+    width: 46%;
+    margin: 0px 2% 50px;
+    }
+
+footer {
+    margin-left: 2%;
+    margin-right: 2%
+    font-size: 23px;
+    width: 100%;    
+}
+}
+
+@media screen and (min-width: 1024px) {
+
+body {
+	margin: 100px 40px 20px;
+}    
+
+h1 {
+	font-size: 27px;
+	line-height: 33px;
+	margin-bottom: 120px;
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+    width: 50%;
+}
+
+.filters ul {
+    font-size: 12px;
+    letter-spacing: 1.3px;
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+    margin-bottom: 20px;
+}
+
+.courses {
+	margin-bottom: 120px;
+}
+
+.course {
+        width: 30.33333%;
+        margin: 0px 1.5% 50px;
+    }
+
+footer {
+	margin-left: 1.5%;
+	margin-right: 1.5%;
+	font-size: 27px;
+}
+}
+
+
+@media screen and (min-width: 1240px) {
+
+body {
+    margin-bottom: 40px;
+}
+
+h1 {
+	width: 40%;
+}
+
+.filters ul {
+    margin-bottom: 25px;
+}
+
+.courses {
+    margin-bottom: 140px;
+}
+
+}
+
+@media screen and (min-width: 1240px) {
+
+h1 {
+    width: 35%;
+}
+}
