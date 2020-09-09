@@ -36,7 +36,7 @@
         }];
 
         $window.resize(function (e) {
-            resizeOps.forEach(function(operation) {
+            resizeOps.forEach(function (operation) {
                 operation(e);
             });
         });
@@ -70,7 +70,7 @@
             verticalSwipeDisable: false
         };
 
-        function Shinybox (element, options) {
+        function Shinybox(element, options) {
             var self = this instanceof Shinybox ? this : {};
             var settings = $.extend({}, defaultOptions, options);
             var selector = element.selector;
@@ -96,13 +96,17 @@
                     self.ui.openWithSlide(settings.initialIndexOnArray);
                 };
             } else {
-                function openShinyboxOnClick (e) {
+                function openShinyboxOnClick(e) {
                     if (e.target.parentNode.className === 'slide current') {
                         return false;
                     }
 
                     e.preventDefault();
                     e.stopPropagation();
+
+                    // check for currently selected filter and grab its classname
+                    var filters = $('.filter-item').filter('.checked')
+                    var filterTerm = filters.attr("data-filter")
 
                     self.ui && self.ui.destroy();
 
@@ -122,7 +126,12 @@
                     if (relVal && relVal !== 'nofollow') {
                         $slideElements = $selectedElements.filter('[' + relType + '="' + relVal + '"]');
                     } else {
-                        $slideElements = $(selector);
+                        // check filter term (can be undefined) and apply it to ALSO filter shinybox
+                        if (filterTerm !== undefined) {
+                            $slideElements = $(selector + filterTerm);
+                        } else {
+                            $slideElements = $(selector);
+                        }
                     }
 
                     // Generate slides from DOM elements and initialize UI
@@ -131,15 +140,15 @@
                     });
                     var index = typeof $this.data("dom-index") !== "undefined" ? $this.data("dom-index") - $(filteredSlides[0]).data("dom-index") : $(filteredSlides).index($this);
 
-                    var slides = Array.prototype.map.call(filteredSlides, function(slideElement) {
-                            var $slideElement = $(slideElement);
-                            return {
-                                href: $slideElement.attr('href') || null,
-                                title: $slideElement.attr('title') || null,
-                                caption: $slideElement.attr('caption') || null,
-                                srcset: $slideElement.attr('data-hrefs') || null
-                            };
-                        });
+                    var slides = Array.prototype.map.call(filteredSlides, function (slideElement) {
+                        var $slideElement = $(slideElement);
+                        return {
+                            href: $slideElement.attr('href') || null,
+                            title: $slideElement.attr('title') || null,
+                            caption: $slideElement.attr('caption') || null,
+                            srcset: $slideElement.attr('data-hrefs') || null
+                        };
+                    });
 
                     eventCatcher = $(e.target);
                     self.ui = new UI(slides, settings);
@@ -169,7 +178,7 @@
         /**
          * UI Manager Class
          */
-        function UI (slides, settings) {
+        function UI(slides, settings) {
             this.slides = slides;
             this.settings = settings;
             this.currentX = 0;
@@ -184,10 +193,10 @@
 
             this.closeButton = $('<a class="shinybox-close" />');
             this.captionBox = $('<div class="shinybox-caption captionTitle"></div>');
-            
+
             this.caption = $('<p class="caption"></p>');
             this.title = $('<p class="title"></p>');
-            
+
             this.captionBox.append(this.title, this.caption);
 
             this.navigationContainer = $('<div class="navigationContainer"></div>')
@@ -203,7 +212,7 @@
             if (isMobile) {
                 this.overlay.addClass("mobile-view");
             }
-            
+
             if (this.settings.noTitleCaptionBox) {
                 this.overlay.addClass("noTitleCaptionBox");
             }
@@ -277,7 +286,7 @@
          * Touch navigation
          */
         UI.prototype.setupGestureNavigation = function () {
-            if(!isTouch) {
+            if (!isTouch) {
                 return;
             }
 
@@ -292,7 +301,7 @@
             var vSwipMinDistance = 50;
             var startCoords = {};
             var endCoords = {};
-            
+
             var touchMoveEventHandler = function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -331,10 +340,10 @@
                 }
             };
 
-            
+
             var touchPoints = null;
             this.overlay.on('touchstart', function (e) {
-                if(e.originalEvent.touches && e.originalEvent.touches.length > 1) {
+                if (e.originalEvent.touches && e.originalEvent.touches.length > 1) {
                     $(this).off('touchmove', touchMoveEventHandler);
                     return true;
                 }
@@ -353,7 +362,7 @@
             });
 
             this.overlay.on('touchend', function (e) {
-                if(e.originalEvent.touches && e.originalEvent.touches.length > 1) {
+                if (e.originalEvent.touches && e.originalEvent.touches.length > 1) {
                     $(this).off('touchmove', touchMoveEventHandler);
                     return true;
                 }
@@ -386,10 +395,10 @@
                     }
                 } else if (hSwipe) {
                     hSwipe = false;
-                    if( hDistance >= hSwipMinDistance && hDistance >= hDistanceLast && hasOneTouchPoint) {
+                    if (hDistance >= hSwipMinDistance && hDistance >= hDistanceLast && hasOneTouchPoint) {
                         // swipeLeft
                         self.getPrev();
-                    } else if ( hDistance <= -hSwipMinDistance && hDistance <= hDistanceLast && hasOneTouchPoint) {
+                    } else if (hDistance <= -hSwipMinDistance && hDistance <= hDistanceLast && hasOneTouchPoint) {
                         // swipeRight
                         self.getNext();
                     }
@@ -406,7 +415,7 @@
         UI.prototype.setupKeyboardNavigation = function () {
             var self = this;
             this._keyDownEvent = function (e) {
-                if(!self.isOpen) {
+                if (!self.isOpen) {
                     return true;
                 }
 
@@ -434,7 +443,7 @@
          */
         UI.prototype.setupWindowResizeEvent = function () {
             var self = this;
-            this.resizeIndex = resizeOps.push(function() {
+            this.resizeIndex = resizeOps.push(function () {
                 self.updateDimensions();
             }) - 1;
         };
@@ -488,7 +497,7 @@
                 this.slider.fadeIn();
             }
 
-            if(!this.settings.loopAtEnd) {
+            if (!this.settings.loopAtEnd) {
                 this.prevButton.removeClass('disabled');
                 this.nextButton.removeClass('disabled');
                 if (index === 0) {
@@ -531,10 +540,10 @@
             this.setSlide(index);
             this.preloadMedia(index);
 
-            if(this.settings.loopAtEnd || nextIndex !== 0) {
+            if (this.settings.loopAtEnd || nextIndex !== 0) {
                 this.preloadMedia(nextIndex);
             }
-            if(this.settings.loopAtEnd || prevIndex !== this.slides.length - 1) {
+            if (this.settings.loopAtEnd || prevIndex !== this.slides.length - 1) {
                 this.preloadMedia(prevIndex);
             }
         };
@@ -556,7 +565,7 @@
             } else {
                 this.overlay.addClass('rightSpring');
                 setTimeout(function () {
-                   self.overlay.removeClass('rightSpring');
+                    self.overlay.removeClass('rightSpring');
                 }, 500);
             }
         };
@@ -588,7 +597,7 @@
          * If slide contains an iframe, refresh it before exiting slide.
          * to have zero delay when the slide is opened next time
          */
-        UI.prototype.resetIframeInSlide = function(index) {
+        UI.prototype.resetIframeInSlide = function (index) {
             index = this.validateIndex(index);
 
             var iframeInSlide = this.slideElements.eq(index).contents().find('iframe');
@@ -631,7 +640,7 @@
                 srcset = this.slides[index].srcset;
             }
 
-            if(!src) {
+            if (!src) {
                 return false;
             }
 
@@ -807,7 +816,7 @@
         $.fn.shinybox = function (options) {
             var instance = this.data('_shinybox');
 
-            if(instance && options === 'destroy') {
+            if (instance && options === 'destroy') {
                 instance.destroy();
                 return this.removeData('_shinybox');
             }
@@ -823,7 +832,7 @@
         return Shinybox;
 
         // Utilities
-        function noop() {}
+        function noop() { }
 
         function checkForCssTransitionSupport() {
             var prefixes = ["transition", "WebkitTransition", "MozTransition", "OTransition", "msTransition", "KhtmlTransition"];
