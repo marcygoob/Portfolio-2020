@@ -104,6 +104,10 @@
                     e.preventDefault();
                     e.stopPropagation();
 
+                    // check for currently selected filter and grab its classname
+                    var filters = $('.filter-item').filter('.checked')
+                    var filterTerm = filters.attr("data-filter")                    
+
                     self.ui && self.ui.destroy();
 
                     var $this = $(this);
@@ -122,7 +126,12 @@
                     if (relVal && relVal !== 'nofollow') {
                         $slideElements = $selectedElements.filter('[' + relType + '="' + relVal + '"]');
                     } else {
-                        $slideElements = $(selector);
+                        // check filter term (can be undefined) and apply it to ALSO filter shinybox
+                        if (filterTerm !== undefined) {
+                            $slideElements = $(selector + filterTerm);
+                        } else {
+                            $slideElements = $(selector);
+                        }
                     }
 
                     // Generate slides from DOM elements and initialize UI
